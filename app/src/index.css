@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 357 92% 47%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 357 92% 47%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.08;
+    --input: 0 0% 100% / 0.08;
+    --ring: 357 92% 47%;
+    --radius: 0.5rem;
+  }
+
+  body {
+    @apply bg-[#0A0A0A] text-white;
+    font-family: 'Almarai', system-ui, -apple-system, sans-serif;
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cairo', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .rolling-text {
+    display: inline-block;
+    overflow: hidden;
+    height: 1.5em;
+    line-height: 1.5em;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .rolling-text .block {
+    display: flex;
+  }
+
+  .rolling-text .letter {
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+    transform-style: preserve-3d;
+    white-space: pre;
+  }
+
+  .rolling-text .block:last-child {
+    color: #E50914;
+  }
+
+  .rolling-text:hover .letter {
+    transform: translateY(-100%);
+  }
+}
+
+/* Carousel styles */
+.carousel-stage {
+  width: 100%;
+  max-width: 1500px;
+  height: 60vh;
+  perspective: 2000px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+.carousel-rotator {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: grab;
+  position: relative;
+}
+
+.carousel-rotator:active {
+  cursor: grabbing;
+}
+
+.carousel-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  aspect-ratio: 4/5;
+  margin-left: -200px;
+  margin-top: -250px;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  background: #141414;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 75%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.carousel-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Elastic Grid */
+.grid-container {
+  width: 100%;
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lines path {
+  transition: d 0.3s ease;
+}
+
+.curved-x {
+  animation: morphX 6s infinite alternate ease-in-out;
+}
+
+.curved-y {
+  animation: morphY 6s infinite alternate ease-in-out;
+  animation-delay: 2s;
+}
+
+@keyframes morphX {
+  0% {
+    d: path("M0,200 C200,200 300,400 500,400 C700,400 800,200 1000,200");
+  }
+  50% {
+    d: path("M0,300 C200,300 300,100 500,300 C700,500 800,300 1000,300");
+  }
+  100% {
+    d: path("M0,400 C300,200 400,600 500,400 C600,200 700,600 1000,400");
+  }
+}
+
+@keyframes morphY {
+  0% {
+    d: path("M200,0 C200,200 400,300 400,500 C400,700 200,800 200,1000");
+  }
+  50% {
+    d: path("M300,0 C300,200 500,300 500,500 C500,700 300,800 300,1000");
+  }
+  100% {
+    d: path("M400,0 C200,300 600,400 400,500 C200,600 600,700 400,800");
+  }
+}
+
+.node {
+  animation: nodePulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes nodePulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Gallery Tiles */
+.gallery-container {
+  width: 100%;
+  position: relative;
+  perspective: 1000px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.tile {
+  position: relative;
+  width: 80vw;
+  height: 50vh;
+  margin: 5vh 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tile.right {
+  margin-left: auto;
+}
+
+.tile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.tile-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  font-weight: 700;
+  color: #fff;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  direction: rtl;
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.85));
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Scroll indicator */
+.scroll-indicator-line {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.5);
+  animation: scrollPulse 2s infinite ease-in-out;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Cart drawer */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.cart-drawer.open {
+  pointer-events: all;
+}
+
+.cart-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.cart-drawer.open .cart-drawer-backdrop {
+  opacity: 1;
+}
+
+.cart-drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: #141414;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-drawer.open .cart-drawer-panel {
+  transform: translateX(0);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .rolling-text .letter,
+  .carousel-card img,
+  .cart-drawer-backdrop,
+  .cart-drawer-panel {
+    transition: none !important;
+  }
+  .curved-x, .curved-y, .node {
+    animation: none !important;
+  }
+}
